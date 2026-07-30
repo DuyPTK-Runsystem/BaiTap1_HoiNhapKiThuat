@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="en" style=""><head><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" class="">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Sign Up Page</title>
+<!-- Tailwind CSS v3 CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Custom Font Configuration (Assuming a clean sans-serif like Inter or Poppins) -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style data-purpose="typography">
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+<style data-purpose="custom-styling">
+    /* Specific input border and radius matching the image */
+    .form-input-custom {
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      width: 100%;
+      font-size: 0.875rem;
+    }
+    .form-input-custom:focus {
+      outline: none;
+      border-color: #000;
+      ring: 0;
+    }
+    /* Subtle shadow for the card */
+    .signup-card {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+<body class="bg-white min-h-screen flex flex-col">
+<!-- BEGIN: MainHeader -->
+<header class="p-8 lg:p-12">
+<div class="max-w-7xl mx-auto">
+<h1 class="text-xl font-bold text-black" data-purpose="logo">Your Logo</h1>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="flex-grow flex items-center justify-center p-4 lg:p-12">
+<div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<!-- BEGIN: RegistrationFormSection -->
+<section class="flex justify-center lg:justify-start" data-purpose="form-container">
+<div class="bg-white p-10 rounded-2xl signup-card w-full max-w-[480px] border border-gray-100">
+<div class="mb-8">
+<p class="text-lg text-gray-700">Welcome !</p>
+<h2 class="text-4xl font-bold text-black mt-2">Sign up to</h2>
+<p class="text-sm text-gray-500 mt-2">Lorem Ipsum is simply</p>
+</div>
+<form action="#" class="space-y-6" method="POST">
+<!-- Email Field -->
+<div data-purpose="input-group">
+<label class="block text-sm font-medium text-black mb-2" for="email">Email</label>
+<input class="form-input-custom" id="email" name="email" placeholder="Enter your email" type="email">
+</div>
+<!-- Username Field -->
+<div data-purpose="input-group">
+<label class="block text-sm font-medium text-black mb-2" for="username">User name</label>
+<input class="form-input-custom" id="username" name="username" placeholder="Enter your user name" type="text">
+</div>
+<!-- Password Field -->
+<div data-purpose="input-group">
+<label class="block text-sm font-medium text-black mb-2" for="password">Password</label>
+<div class="relative">
+<input class="form-input-custom pr-12" id="password" name="password" placeholder="Enter your Password" type="password">
+<button aria-label="Toggle password visibility" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-600" type="button">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div><div class="mt-2 space-y-1">
+  <p class="text-xs font-medium text-gray-700 mb-1">Password requirements:</p>
+  <ul class="space-y-1">
+    <li class="flex items-center gap-2 text-xs text-green-600">
+      <span class="material-symbols-outlined text-sm">check_circle</span>
+      <span class="">At least 6 characters</span>
+    </li>
+    <li class="flex items-center gap-2 text-xs text-green-600">
+      <span class="material-symbols-outlined text-sm">check_circle</span>
+      <span class="">Contain at least one number</span>
+    </li>
+    <li class="flex items-center gap-2 text-xs text-red-600">
+      <span class="material-symbols-outlined text-sm">cancel</span>
+      <span class="">Contain at least one letter</span>
+    </li>
+  </ul>
+</div>
+<!-- Confirm Password Field -->
+<div data-purpose="input-group">
+<label class="block text-sm font-medium text-black mb-2" for="confirm-password">Confrim Password</label>
+<div class="relative">
+<input class="form-input-custom pr-12" id="confirm-password" name="confirm-password" placeholder="Confrim your Password" type="password">
+<button aria-label="Toggle password visibility" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-600" type="button">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div><div class="flex items-center gap-2 mt-4">
+  <input type="checkbox" id="terms" name="terms" class="w-4 h-4 text-black border-gray-300 rounded focus:ring-black">
+  <label for="terms" class="text-sm text-gray-600">
+    I agree with <a href="#" class="text-black font-semibold hover:underline">term and condition</a>
+  </label>
+</div>
+<!-- Register Button -->
+<div class="pt-2">
+<button class="w-full bg-black text-white font-semibold py-4 rounded-lg hover:bg-gray-900 transition-colors duration-200" type="submit">
+                Register
+              </button>
+</div>
+</form>
+<!-- Login Link -->
+<div class="mt-8 text-center">
+<p class="text-sm text-gray-500">
+              Already have an Account?&nbsp;<a class="text-black font-bold hover:underline" href="#">Login</a></p>
+</div>
+</div>
+</section>
+<!-- END: RegistrationFormSection -->
+<!-- BEGIN: IllustrationSection -->
+<section class="hidden lg:flex justify-center items-center" data-purpose="illustration-container">
+<img alt="Professional minimalist 3D illustration of people collaborating on a digital project" class="w-full h-auto max-w-lg object-contain rounded-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABaQQpD9nQJ7ujuiWgEEN7gyZ7KqtoCM92bFEC6O1D4OTALn57GFimPKLj6jBxkVf_kh95FBEgOA-6iTeSsZ8fhly1zZ7RsahWAi1QTIV_YqCuxmFU3Nb95LUR1IOiQZ4JDlY9lhOv9Blaa2g9BycLBjC8LDaNMeAFKRkxJSbRJy6XkzSnfkV7mexkAYAT1JEpy9ZghCLK7NzVnAVOHIPPFswcHON2WMSC-cjMYkDM4pFwMXsnescl">
+</section>
+<!-- END: IllustrationSection -->
+</div>
+</main>
+<!-- END: MainContent -->
+
+
+</body></html>
