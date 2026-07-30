@@ -1,0 +1,2 @@
+https://www.figma.com/design/MnDFaQw9TCTrDBAzgiAptO/LOGIFY---WEB-LOGIN-UI-KIT--Community-?node-id=9-128
+Chỉ sử dụng màn hình Login 2 và Login 2 register
