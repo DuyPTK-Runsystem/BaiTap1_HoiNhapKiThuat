@@ -29,3 +29,10 @@ export interface ApiError {
   status: number
   message: string
 }
+
+export interface RestResponse<T> {
+  statusCode: number
+  error: string | null
+  message: string | Record<string, unknown> | null
+  data: T | null
+}

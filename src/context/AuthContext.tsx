@@ -20,9 +20,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (input: LoginInput) => {
     setIsLoading(true)
     try {
-      const nextUser = await loginRequest(input)
-      saveSession(nextUser)
-      setUser(nextUser)
+      const response = await loginRequest(input)
+      if (!response.data || response.statusCode >= 400) {
+        throw new Error(typeof response.message === 'string' ? response.message : 'Vui lòng kiểm tra username và password')
+      }
+      saveSession(response.data)
+      setUser(response.data)
     } finally {
       setIsLoading(false)
     }
@@ -31,7 +34,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = async (input: RegisterInput) => {
     setIsLoading(true)
     try {
-      await registerRequest(input)
+      const response = await registerRequest(input)
+      if (!response.data || response.statusCode >= 400) {
+        throw new Error(typeof response.message === 'string' ? response.message : 'Không thể tạo tài khoản')
+      }
     } finally {
       setIsLoading(false)
     }
