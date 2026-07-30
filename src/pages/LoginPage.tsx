@@ -6,6 +6,7 @@ import { AuthShell } from '../components/AuthShell'
 import { FormField } from '../components/FormField'
 import { PasswordField } from '../components/PasswordField'
 import { SubmitButton } from '../components/SubmitButton'
+import { StatusOverlay } from '../components/StatusOverlay'
 import { ROUTES } from '../constants/storage'
 import { useAuth } from '../context/AuthContext'
 import { loginSchema } from '../schemas/authSchemas'
@@ -36,6 +37,7 @@ export function LoginPage() {
         <SubmitButton isLoading={isLoading}>Sign in</SubmitButton>
       </form>
       <p className="switch-copy">Don't have an account? <Link to={ROUTES.REGISTER}>Sign up</Link></p>
+      <StatusOverlay isLoading={isLoading} error={serverError} onClose={() => setServerError('')} />
     </AuthShell>
   )
 }

@@ -6,6 +6,7 @@ import { AuthShell } from '../components/AuthShell'
 import { FormField } from '../components/FormField'
 import { PasswordField } from '../components/PasswordField'
 import { SubmitButton } from '../components/SubmitButton'
+import { StatusOverlay } from '../components/StatusOverlay'
 import { ROUTES } from '../constants/storage'
 import { useAuth } from '../context/AuthContext'
 import { registerSchema } from '../schemas/authSchemas'
@@ -15,6 +16,7 @@ export function RegisterPage() {
   const navigate = useNavigate()
   const { register: registerUser, isLoading } = useAuth()
   const [serverError, setServerError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const { register, handleSubmit, watch, formState: { errors } } = useForm<RegisterInput>({ resolver: zodResolver(registerSchema), defaultValues: { termsAgreement: false } })
   const password = watch('password', '')
   const passwordRequirements = [
@@ -27,7 +29,7 @@ export function RegisterPage() {
     setServerError('')
     try {
       await registerUser(input)
-      navigate(ROUTES.LOGIN)
+      setSuccessMessage('Your account is ready to use.')
     } catch (error) {
       setServerError(error instanceof Error ? error.message : 'Không thể tạo tài khoản')
     }
@@ -48,6 +50,7 @@ export function RegisterPage() {
         <SubmitButton isLoading={isLoading}>Create account</SubmitButton>
       </form>
       <p className="switch-copy">Already have an account? <Link to={ROUTES.LOGIN}>Sign in</Link></p>
+      <StatusOverlay isLoading={isLoading} error={serverError} success={successMessage} onClose={() => setServerError('')} onContinue={() => navigate(ROUTES.LOGIN)} />
     </AuthShell>
   )
 }
