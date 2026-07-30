@@ -16,17 +16,20 @@ export function RegisterPage() {
   const navigate = useNavigate()
   const { register: registerUser, isLoading } = useAuth()
   const [serverError, setServerError] = useState('')
+  const [validationPopup, setValidationPopup] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<RegisterInput>({ resolver: zodResolver(registerSchema), defaultValues: { termsAgreement: false } })
-  const password = watch('password', '')
+  const { register, handleSubmit, clearErrors, formState: { errors } } = useForm<RegisterInput>({ resolver: zodResolver(registerSchema), defaultValues: { termsAgreement: false } })
+  const [checkedPassword, setCheckedPassword] = useState('')
+  const passwordRegistration = register('password')
   const passwordRequirements = [
-    ['At least 6 characters', password.length >= 6],
-    ['Contain at least one number', /[0-9]/.test(password)],
-    ['Contain at least one letter', /[A-Za-z]/.test(password)],
+    ['At least 6 characters', checkedPassword.length >= 6],
+    ['Contain at least one number', /[0-9]/.test(checkedPassword)],
+    ['Contain at least one letter', /[A-Za-z]/.test(checkedPassword)],
   ] as const
 
   const onSubmit = async (input: RegisterInput) => {
     setServerError('')
+    setValidationPopup('')
     try {
       await registerUser(input)
       setSuccessMessage('Your account is ready to use.')
@@ -37,11 +40,11 @@ export function RegisterPage() {
 
   return (
     <AuthShell title="Create account" subtitle="Set up your Logify account in a few seconds.">
-      <form className="auth-form register-form" onSubmit={handleSubmit(onSubmit)}>
+      <form className="auth-form register-form" onSubmit={handleSubmit(onSubmit, () => setValidationPopup('Vui lòng kiểm tra thông tin đăng ký'))}>
         {serverError && <div className="server-error" role="alert">{serverError}</div>}
         <FormField label="Username" id="username" placeholder="Choose a username" autoComplete="username" error={errors.username?.message} {...register('username')} />
         <FormField label="Email" id="email" type="email" placeholder="you@example.com" autoComplete="email" error={errors.email?.message} {...register('email')} />
-        <PasswordField label="Password" id="password" placeholder="At least 6 characters" autoComplete="new-password" error={errors.password?.message} {...register('password')} />
+        <PasswordField label="Password" id="password" placeholder="At least 6 characters" autoComplete="new-password" error={errors.password?.message} {...passwordRegistration} onBlur={(event) => { passwordRegistration.onBlur(event); setCheckedPassword(event.target.value) }} />
         <ul className="password-requirements" aria-label="Password requirements">
           {passwordRequirements.map(([label, met]) => <li className={met ? 'requirement-met' : ''} key={label}><span aria-hidden="true">{met ? '✓' : '×'}</span>{label}</li>)}
         </ul>
@@ -50,7 +53,7 @@ export function RegisterPage() {
         <SubmitButton isLoading={isLoading}>Create account</SubmitButton>
       </form>
       <p className="switch-copy">Already have an account? <Link to={ROUTES.LOGIN}>Sign in</Link></p>
-      <StatusOverlay isLoading={isLoading} error={serverError} success={successMessage} onClose={() => setServerError('')} onContinue={() => navigate(ROUTES.LOGIN)} />
+      <StatusOverlay isLoading={isLoading} error={serverError || validationPopup} success={successMessage} onClose={() => { setServerError(''); setValidationPopup(''); clearErrors() }} onContinue={() => navigate(ROUTES.LOGIN)} />
     </AuthShell>
   )
 }
