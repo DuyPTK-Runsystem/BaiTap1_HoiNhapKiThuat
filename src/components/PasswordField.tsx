@@ -23,7 +23,7 @@ export function PasswordField({ label, error, id, ...props }: PasswordFieldProps
 
   return (
     <label className="field" htmlFor={id}>
-      <span>{label}</span>
+      <span>{label} (*)</span>
       <span className="password-input-wrap">
         <input id={id} aria-invalid={Boolean(error)} type={visible ? 'text' : 'password'} {...props} />
         <button className="password-toggle" type="button" aria-label={visible ? 'Hide password' : 'Show password'} onClick={() => setVisible((current) => !current)}>

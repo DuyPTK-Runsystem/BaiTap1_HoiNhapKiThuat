@@ -8,7 +8,7 @@ interface FormFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 export function FormField({ label, error, id, ...props }: FormFieldProps) {
   return (
     <label className="field" htmlFor={id}>
-      <span>{label}</span>
+      <span>{label} (*)</span>
       <input id={id} aria-invalid={Boolean(error)} {...props} />
       {error && <small role="alert">{error}</small>}
     </label>
