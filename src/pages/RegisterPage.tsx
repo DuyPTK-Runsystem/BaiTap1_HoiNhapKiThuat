@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthShell } from '../components/AuthShell'
 import { FormField } from '../components/FormField'
+import { PasswordField } from '../components/PasswordField'
 import { SubmitButton } from '../components/SubmitButton'
 import { ROUTES } from '../constants/storage'
 import { useAuth } from '../context/AuthContext'
@@ -38,11 +39,11 @@ export function RegisterPage() {
         {serverError && <div className="server-error" role="alert">{serverError}</div>}
         <FormField label="Username" id="username" placeholder="Choose a username" autoComplete="username" error={errors.username?.message} {...register('username')} />
         <FormField label="Email" id="email" type="email" placeholder="you@example.com" autoComplete="email" error={errors.email?.message} {...register('email')} />
-        <FormField label="Password" id="password" type="password" placeholder="At least 6 characters" autoComplete="new-password" error={errors.password?.message} {...register('password')} />
+        <PasswordField label="Password" id="password" placeholder="At least 6 characters" autoComplete="new-password" error={errors.password?.message} {...register('password')} />
         <ul className="password-requirements" aria-label="Password requirements">
           {passwordRequirements.map(([label, met]) => <li className={met ? 'requirement-met' : ''} key={label}><span aria-hidden="true">{met ? '✓' : '×'}</span>{label}</li>)}
         </ul>
-        <FormField label="Confirm password" id="confirmPassword" type="password" placeholder="Repeat your password" autoComplete="new-password" error={errors.confirmPassword?.message} {...register('confirmPassword')} />
+        <PasswordField label="Confirm password" id="confirmPassword" placeholder="Repeat your password" autoComplete="new-password" error={errors.confirmPassword?.message} {...register('confirmPassword')} />
         <label className="terms-field"><input type="checkbox" {...register('termsAgreement')} /> <span>I agree to the <a href="#terms">Terms &amp; Conditions</a>{errors.termsAgreement?.message && <small role="alert">{errors.termsAgreement.message}</small>}</span></label>
         <SubmitButton isLoading={isLoading}>Create account</SubmitButton>
       </form>

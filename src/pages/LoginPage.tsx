@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthShell } from '../components/AuthShell'
 import { FormField } from '../components/FormField'
+import { PasswordField } from '../components/PasswordField'
 import { SubmitButton } from '../components/SubmitButton'
 import { ROUTES } from '../constants/storage'
 import { useAuth } from '../context/AuthContext'
@@ -31,7 +32,7 @@ export function LoginPage() {
       <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
         {serverError && <div className="server-error" role="alert">{serverError}</div>}
         <FormField label="Username" id="username" placeholder="Your username" autoComplete="username" error={errors.username?.message} {...register('username')} />
-        <FormField label="Password" id="password" type="password" placeholder="Your password" autoComplete="current-password" error={errors.password?.message} {...register('password')} />
+        <PasswordField label="Password" id="password" placeholder="Your password" autoComplete="current-password" error={errors.password?.message} {...register('password')} />
         <SubmitButton isLoading={isLoading}>Sign in</SubmitButton>
       </form>
       <p className="switch-copy">Don't have an account? <Link to={ROUTES.REGISTER}>Sign up</Link></p>
