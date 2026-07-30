@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { font-family: 'Poppins', sans-serif; color: #111; background: #fff; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, input { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+.auth-page { min-height: 100vh; background: #fff; }
+.site-header { padding: 24px 3.5%; }
+.site-header h1 { margin: 0; font-size: 14px; font-weight: 700; }
+.auth-content { display: flex; align-items: center; min-height: calc(100vh - 75px); padding: 32px 4%; }
+.auth-grid { display: grid; grid-template-columns: minmax(320px, 480px) minmax(360px, 1fr); align-items: center; gap: 9%; width: min(1120px, 100%); margin: 0 auto; }
+.auth-card { width: 100%; border: 1px solid #dedede; border-radius: 8px; padding: 30px 32px; box-shadow: 0 4px 20px rgba(0, 0, 0, .05); }
+.auth-illustration { display: flex; justify-content: center; align-items: center; }
+.auth-illustration img { width: 100%; max-width: 500px; height: auto; object-fit: contain; }
+.eyebrow, .profile-label { color: #333; font-size: 16px; font-weight: 400; letter-spacing: 0; }
+.panel-eyebrow { margin: 0 0 12px; }
+.auth-card h2 { margin: 0; font-size: 24px; font-weight: 600; line-height: 1.25; }
+.auth-subtitle { margin: 4px 0 30px; color: #555; font-size: 12px; line-height: 1.5; }
+.auth-form { display: grid; gap: 20px; }
+.field { display: grid; gap: 7px; color: #111; font-size: 11px; font-weight: 500; letter-spacing: 0; }
+.field input { width: 100%; border: 1px solid #bdbdbd; border-radius: 4px; padding: 12px 16px; outline: 0; color: #20201e; background: transparent; font-size: 11px; transition: border-color .2s; }
+.field input:focus { border-color: #111; }
+.field input[aria-invalid='true'] { border-color: #ad594c; }
+.field small, .terms-field small { color: #ad594c; font-size: 11px; font-weight: 500; letter-spacing: 0; }
+.submit-button { margin-top: 8px; border: 0; border-radius: 4px; padding: 13px 20px; color: #fff; background: #000; cursor: pointer; font-size: 11px; font-weight: 500; transition: background .2s; }
+.submit-button:hover:not(:disabled) { background: #333; }
+.submit-button:disabled { cursor: wait; opacity: .6; }
+.switch-copy { margin: 28px 0 0; color: #999; font-size: 11px; text-align: center; }
+.switch-copy a, .terms-field a { color: #111; font-weight: 700; text-decoration: none; }
+.server-error { border-left: 2px solid #ad594c; padding: 10px 12px; color: #8c493e; background: #f7e8e3; font-size: 12px; line-height: 1.5; }
+.register-form { gap: 14px; }
+.password-requirements { display: grid; gap: 5px; margin: -4px 0 2px; padding: 0; color: #c34e4e; font-size: 10px; list-style: none; }
+.password-requirements li { display: flex; align-items: center; gap: 7px; }
+.password-requirements li span { width: 14px; font-size: 14px; line-height: 1; text-align: center; }
+.password-requirements .requirement-met { color: #31905c; }
+.terms-field { display: flex; align-items: flex-start; gap: 8px; margin-top: 4px; color: #666; font-size: 11px; line-height: 1.7; }
+.terms-field input { width: 15px; height: 15px; margin-top: 2px; accent-color: #242521; }
+.terms-field span { display: grid; }
+.home-page { min-height: 100vh; background: #f3f1ec; }
+.home-header { display: flex; justify-content: space-between; align-items: center; padding: 28px 6vw; border-bottom: 1px solid #dedbd3; }
+.home-header .mobile-brand { display: flex; }
+.text-button { border: 0; color: #55564d; background: transparent; cursor: pointer; font-size: 12px; font-weight: 700; }
+.home-content { width: min(900px, 88%); margin: 15vh auto; }
+.home-content h1 { margin: 20px 0 12px; font-size: clamp(3rem, 7vw, 7rem); font-weight: 500; letter-spacing: -.08em; line-height: .95; }
+.home-lead { color: #85847d; }
+.profile-card { display: flex; justify-content: space-between; align-items: flex-end; width: min(430px, 100%); margin-top: 70px; border-top: 1px solid #bbb9b1; padding-top: 18px; }
+.profile-card strong { font-size: 20px; }
+.profile-card p { margin: 7px 0 0; color: #85847d; font-size: 13px; }
+@media (max-width: 800px) { .auth-content { padding: 24px 20px 50px; } .auth-grid { display: block; max-width: 480px; } .auth-illustration { display: none; } .auth-card { padding: 28px 22px; } .home-content { margin-top: 12vh; } }

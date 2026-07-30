@@ -1,0 +1,52 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
+import { AuthShell } from '../components/AuthShell'
+import { FormField } from '../components/FormField'
+import { SubmitButton } from '../components/SubmitButton'
+import { ROUTES } from '../constants/storage'
+import { useAuth } from '../context/AuthContext'
+import { registerSchema } from '../schemas/authSchemas'
+import type { RegisterInput } from '../types/auth'
+
+export function RegisterPage() {
+  const navigate = useNavigate()
+  const { register: registerUser, isLoading } = useAuth()
+  const [serverError, setServerError] = useState('')
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<RegisterInput>({ resolver: zodResolver(registerSchema), defaultValues: { termsAgreement: false } })
+  const password = watch('password', '')
+  const passwordRequirements = [
+    ['At least 6 characters', password.length >= 6],
+    ['Contain at least one number', /[0-9]/.test(password)],
+    ['Contain at least one letter', /[A-Za-z]/.test(password)],
+  ] as const
+
+  const onSubmit = async (input: RegisterInput) => {
+    setServerError('')
+    try {
+      await registerUser(input)
+      navigate(ROUTES.LOGIN)
+    } catch (error) {
+      setServerError(error instanceof Error ? error.message : 'Không thể tạo tài khoản')
+    }
+  }
+
+  return (
+    <AuthShell title="Create account" subtitle="Set up your Logify account in a few seconds.">
+      <form className="auth-form register-form" onSubmit={handleSubmit(onSubmit)}>
+        {serverError && <div className="server-error" role="alert">{serverError}</div>}
+        <FormField label="Username" id="username" placeholder="Choose a username" autoComplete="username" error={errors.username?.message} {...register('username')} />
+        <FormField label="Email" id="email" type="email" placeholder="you@example.com" autoComplete="email" error={errors.email?.message} {...register('email')} />
+        <FormField label="Password" id="password" type="password" placeholder="At least 6 characters" autoComplete="new-password" error={errors.password?.message} {...register('password')} />
+        <ul className="password-requirements" aria-label="Password requirements">
+          {passwordRequirements.map(([label, met]) => <li className={met ? 'requirement-met' : ''} key={label}><span aria-hidden="true">{met ? '✓' : '×'}</span>{label}</li>)}
+        </ul>
+        <FormField label="Confirm password" id="confirmPassword" type="password" placeholder="Repeat your password" autoComplete="new-password" error={errors.confirmPassword?.message} {...register('confirmPassword')} />
+        <label className="terms-field"><input type="checkbox" {...register('termsAgreement')} /> <span>I agree to the <a href="#terms">Terms &amp; Conditions</a>{errors.termsAgreement?.message && <small role="alert">{errors.termsAgreement.message}</small>}</span></label>
+        <SubmitButton isLoading={isLoading}>Create account</SubmitButton>
+      </form>
+      <p className="switch-copy">Already have an account? <Link to={ROUTES.LOGIN}>Sign in</Link></p>
+    </AuthShell>
+  )
+}
