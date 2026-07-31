@@ -1,6 +1,7 @@
 export const STORAGE_KEYS = {
-  USERS: 'logify_users',
   SESSION: 'logify_session',
+  ACCESS_TOKEN: 'logify_access_token',
+  REFRESH_TOKEN: 'logify_refresh_token',
 } as const
 
 export const ROUTES = {

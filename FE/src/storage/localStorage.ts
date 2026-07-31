@@ -1,5 +1,5 @@
 import { STORAGE_KEYS } from '../constants/storage'
-import type { PublicUser, User } from '../types/auth'
+import type { PublicUser } from '../types/auth'
 
 const read = <T>(key: string, fallback: T): T => {
   const value = localStorage.getItem(key)
@@ -11,12 +11,6 @@ const read = <T>(key: string, fallback: T): T => {
   }
 }
 
-export const getUsers = (): User[] => read<User[]>(STORAGE_KEYS.USERS, [])
-
-export const saveUsers = (users: User[]): void => {
-  localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users))
-}
-
 export const getSession = (): PublicUser | null => read<PublicUser | null>(STORAGE_KEYS.SESSION, null)
 
 export const saveSession = (user: PublicUser): void => {
@@ -25,4 +19,15 @@ export const saveSession = (user: PublicUser): void => {
 
 export const clearSession = (): void => {
   localStorage.removeItem(STORAGE_KEYS.SESSION)
+  localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN)
+  localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN)
 }
+
+export const saveTokens = (accessToken: string, refreshToken: string): void => {
+  localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, accessToken)
+  localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, refreshToken)
+}
+
+export const getAccessToken = (): string | null => localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN)
+
+export const getRefreshToken = (): string | null => localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN)

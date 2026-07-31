@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from 'react'
-import { clearSession, getSession, saveSession } from '../storage/localStorage'
-import { login as loginRequest, register as registerRequest } from '../services/authService'
+import { clearSession, getRefreshToken, getSession, saveSession, saveTokens } from '../storage/localStorage'
+import { login as loginRequest, logout as logoutRequest, register as registerRequest } from '../services/authService'
 import type { LoginInput, PublicUser, RegisterInput } from '../types/auth'
 
 interface AuthContextValue {
@@ -8,7 +8,7 @@ interface AuthContextValue {
   isLoading: boolean
   login: (input: LoginInput) => Promise<void>
   register: (input: RegisterInput) => Promise<void>
-  logout: () => void
+  logout: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
@@ -24,8 +24,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!response.data || response.statusCode >= 400) {
         throw new Error(typeof response.message === 'string' ? response.message : 'Vui lòng kiểm tra username và password')
       }
-      saveSession(response.data)
-      setUser(response.data)
+      saveSession(response.data.user)
+      saveTokens(response.data.access_token, response.data.refresh_token)
+      setUser(response.data.user)
     } finally {
       setIsLoading(false)
     }
@@ -43,9 +44,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const logout = () => {
-    clearSession()
-    setUser(null)
+  const logout = async () => {
+    const refreshToken = getRefreshToken()
+    try {
+      if (refreshToken) await logoutRequest(refreshToken)
+    } finally {
+      clearSession()
+      setUser(null)
+    }
   }
 
   const value = useMemo(() => ({ user, isLoading, login, register, logout }), [user, isLoading])
