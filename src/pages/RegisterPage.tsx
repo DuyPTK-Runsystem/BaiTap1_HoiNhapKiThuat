@@ -20,12 +20,15 @@ export function RegisterPage() {
   const [successMessage, setSuccessMessage] = useState('')
   const { register, handleSubmit, clearErrors, formState: { errors } } = useForm<RegisterInput>({ resolver: zodResolver(registerSchema), defaultValues: { termsAgreement: false } })
   const [checkedPassword, setCheckedPassword] = useState('')
+  const [checkedConfirmPassword, setCheckedConfirmPassword] = useState('')
   const passwordRegistration = register('password')
+  const confirmPasswordRegistration = register('confirmPassword')
   const passwordRequirements = [
     ['At least 6 characters', checkedPassword.length >= 6],
     ['Contain at least one number', /[0-9]/.test(checkedPassword)],
     ['Contain at least one letter', /[A-Za-z]/.test(checkedPassword)],
   ] as const
+  const confirmPasswordMatches = checkedConfirmPassword.length > 0 && checkedConfirmPassword === checkedPassword
 
   const onSubmit = async (input: RegisterInput) => {
     setServerError('')
@@ -44,12 +47,18 @@ export function RegisterPage() {
         {serverError && <div className="server-error" role="alert">{serverError}</div>}
         <FormField label="Username" id="username" placeholder="Choose a username" autoComplete="username" error={errors.username?.message} {...register('username')} />
         <FormField label="Email" id="email" type="email" placeholder="you@example.com" autoComplete="email" error={errors.email?.message} {...register('email')} />
-        <PasswordField label="Password" id="password" placeholder="At least 6 characters" autoComplete="new-password" error={errors.password?.message} {...passwordRegistration} onBlur={(event) => { passwordRegistration.onBlur(event); setCheckedPassword(event.target.value) }} />
+        <PasswordField label="Password" id="password" placeholder="At least 6 characters" autoComplete="new-password" error={errors.password?.message} {...passwordRegistration} onChange={(event) => { passwordRegistration.onChange(event); setCheckedPassword(event.target.value) }} />
         <ul className="password-requirements" aria-label="Password requirements">
           {passwordRequirements.map(([label, met]) => <li className={met ? 'requirement-met' : ''} key={label}><span aria-hidden="true">{met ? '✓' : '×'}</span>{label}</li>)}
         </ul>
-        <PasswordField label="Confirm password" id="confirmPassword" placeholder="Repeat your password" autoComplete="new-password" error={errors.confirmPassword?.message} {...register('confirmPassword')} />
-        <label className="terms-field"><input type="checkbox" {...register('termsAgreement')} /> <span>I agree to the <a href="#terms">Terms &amp; Conditions</a>{errors.termsAgreement?.message && <small role="alert">{errors.termsAgreement.message}</small>}</span></label>
+        <PasswordField label="Confirm password" id="confirmPassword" placeholder="Repeat your password" autoComplete="new-password" error={errors.confirmPassword?.message} hideErrorMessage {...confirmPasswordRegistration} onChange={(event) => { confirmPasswordRegistration.onChange(event); setCheckedConfirmPassword(event.target.value) }} />
+        <ul className="password-requirements" aria-label="Confirm password requirements">
+          <li className={confirmPasswordMatches ? 'requirement-met' : ''}>
+            <span aria-hidden="true">{confirmPasswordMatches ? '✓' : '×'}</span>
+            Confirm password must match password
+          </li>
+        </ul>
+        <label className="terms-field"><input type="checkbox" {...register('termsAgreement')} /> <span>I agree to the <a href="https://github.com/" target="_blank" rel="noreferrer">Terms &amp; Conditions</a>{errors.termsAgreement?.message && <small role="alert">{errors.termsAgreement.message}</small>}</span></label>
         <SubmitButton isLoading={isLoading}>Create account</SubmitButton>
       </form>
       <p className="switch-copy">Already have an account? <Link to={ROUTES.LOGIN}>Sign in</Link></p>

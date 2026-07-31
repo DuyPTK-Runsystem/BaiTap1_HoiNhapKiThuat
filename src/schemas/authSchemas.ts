@@ -2,24 +2,24 @@ import { z } from 'zod'
 
 export const passwordSchema = z
   .string()
-  .min(6, 'Mật khẩu phải có ít nhất 6 kí tự')
-  .regex(/[A-Za-z]/, 'Mật khẩu phải bao gồm kí tự chữ cái')
-  .regex(/[0-9]/, 'Mật khẩu phải bao gồm kí tự số')
+  .min(6, 'Password must have at least 6 characters')
+  .regex(/[A-Za-z]/, 'Password must include letter characters')
+  .regex(/[0-9]/, 'Password must include number characters')
 
 export const registerSchema = z
   .object({
-    username: z.string().trim().min(1, 'Vui lòng nhập username'),
-    email: z.string().trim().email('Email không đúng định dạng'),
+    username: z.string().trim().min(1, 'Please type your username'),
+    email: z.string().trim().email('Invalid email format'),
     password: passwordSchema,
-    confirmPassword: z.string().min(1, 'Vui lòng xác nhận mật khẩu'),
-    termsAgreement: z.boolean().refine((value) => value, 'Vui lòng đồng ý với điều khoản phần mềm'),
+    confirmPassword: z.string().min(1, 'Please confirm your password'),
+    termsAgreement: z.boolean().refine((value) => value, 'Please agree to the terms and conditions'),
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ['confirmPassword'],
-    message: 'Mật khẩu xác nhận không trùng khớp',
+    message: 'Confirm password must match password',
   })
 
 export const loginSchema = z.object({
-  username: z.string().trim().min(1, 'Vui lòng nhập username'),
-  password: z.string().min(1, 'Vui lòng nhập password'),
+  username: z.string().trim().min(1, 'Please type your username'),
+  password: z.string().min(1, 'Please type your password'),
 })

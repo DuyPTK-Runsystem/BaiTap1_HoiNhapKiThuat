@@ -1,8 +1,9 @@
-import { useState, type InputHTMLAttributes } from 'react'
+import { forwardRef, useState, type InputHTMLAttributes } from 'react'
 
 interface PasswordFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
   error?: string
+  hideErrorMessage?: boolean
 }
 
 function EyeIcon({ visible }: { visible: boolean }) {
@@ -18,19 +19,19 @@ function EyeIcon({ visible }: { visible: boolean }) {
   )
 }
 
-export function PasswordField({ label, error, id, ...props }: PasswordFieldProps) {
+export const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(function PasswordField({ label, error, hideErrorMessage = false, id, ...props }, ref) {
   const [visible, setVisible] = useState(false)
 
   return (
     <label className="field" htmlFor={id}>
-      <span>{label} (*)</span>
+      <span>{label} <span className="required-mark">(*)</span></span>
       <span className="password-input-wrap">
-        <input id={id} aria-invalid={Boolean(error)} type={visible ? 'text' : 'password'} {...props} />
+        <input ref={ref} id={id} aria-invalid={Boolean(error)} {...props} type={visible ? 'text' : 'password'} />
         <button className="password-toggle" type="button" aria-label={visible ? 'Hide password' : 'Show password'} onClick={() => setVisible((current) => !current)}>
           <EyeIcon visible={visible} />
         </button>
       </span>
-      {error && <small role="alert">{error}</small>}
+      {error && !hideErrorMessage && <small role="alert">{error}</small>}
     </label>
   )
-}
+})

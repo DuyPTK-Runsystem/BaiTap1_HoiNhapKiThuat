@@ -22,6 +22,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .auth-subtitle { margin: 4px 0 30px; color: #555; font-size: 12px; line-height: 1.5; }
 .auth-form { display: grid; gap: 20px; }
 .field { display: grid; gap: 7px; color: #111; font-size: 11px; font-weight: 500; letter-spacing: 0; }
+.required-mark { color: #c34e4e; }
 .field input { width: 100%; border: 1px solid #bdbdbd; border-radius: 4px; padding: 12px 16px; outline: 0; color: #20201e; background: transparent; font-size: 11px; transition: border-color .2s; }
 .field input:focus { border-color: #111; }
 .password-input-wrap { position: relative; display: block; }
@@ -52,7 +53,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .password-requirements .requirement-met { color: #31905c; }
 .terms-field { display: flex; align-items: flex-start; gap: 8px; margin-top: 4px; color: #666; font-size: 11px; line-height: 1.7; }
 .terms-field input { width: 15px; height: 15px; margin-top: 2px; accent-color: #242521; }
-.terms-field span { display: grid; }
+.terms-field span { display: inline; }
 .home-page { min-height: 100vh; background: #f3f1ec; }
 .home-header { display: flex; justify-content: space-between; align-items: center; padding: 28px 6vw; border-bottom: 1px solid #dedbd3; }
 .home-header .mobile-brand { display: flex; }
